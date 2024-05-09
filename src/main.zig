@@ -48,7 +48,7 @@ const AeadState128a = struct {
         var i: usize = 0;
         while (i + rate <= src.len) : (i += 16) {
             self.p.addBytes(src[i..][0..16]);
-            self.p.extractBytes(dst[i..][0..16]);                        
+            self.p.extractBytes(dst[i..][0..16]);
             self.p.permuteR(8);
         }
         var padded = [_]u8{0} ** 16;
@@ -119,7 +119,7 @@ pub const AsconAead128a = struct {
         st.absorbAd(ad);
         st.dec(m, c);
         if (!crypto.utils.timingSafeEql([16]u8, st.mac(), tag)) {
-            @memset(m.ptr, undefined, m.len);
+            @memset(m.ptr, undefined);
             return error.AuthenticationFailed;
         }
     }
